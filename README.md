@@ -11,3 +11,10 @@
 -app.use vs app.all
 -write dummy auth middleware for the admin
 -write a dummy auth middleware for all uesers routes, except /user/login
+
+# EP-06
+
+-create a free cluster on mongodb official website
+-install mongoose
+-connect your application with your db /devmatch
+-call the connect db function and connect to db before starting port .
