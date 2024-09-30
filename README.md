@@ -18,3 +18,14 @@
 -install mongoose
 -connect your application with your db /devmatch
 -call the connect db function and connect to db before starting port .
+-create a userSchema and user Model
+-create post /signup api to add data to db
+-push some documents using apis calls from postman
+-error handling using try catch.
+-try all this without seeing video.
+
+# EP-07
+
+-what is the diffrn btwn json nd js object
+-Add the express.json middleware to your app
+-make your sign up api dynamic to resolve your data.

@@ -1,4 +1,4 @@
-const connectDb = require("./config/database");
+const connectDb = require(".src/config/database");
 
 connectDb()
   .then(() => {
