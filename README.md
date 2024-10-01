@@ -44,5 +44,9 @@
 -add required, unique, lowercase,min,minLength,trim
 -add default
 -create a custom validate function for gender
--improve db schema - put all appropriate validations on each field in schema.
--Add timestamps to the user schema.
+-improve db schema - put all appropriate validations on each field in schema
+-Add timestamps to the user schema
+-ADD API level validations on patch request and signup post api
+-add api validation for each field
+-install validator
+-explore validator librariesread documentation
