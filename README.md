@@ -50,3 +50,4 @@
 -add api validation for each field
 -install validator
 -explore validator librariesread documentation
+-use it for email,pass,photourl
