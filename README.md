@@ -51,3 +51,14 @@
 -install validator
 -explore validator librariesread documentation
 -use it for email,pass,photourl
+-never trust req.body
+
+# EP - 09
+
+-validate data in signup API
+-install bcrypt package
+-create passwordHash using brcypt.Hash & save the user is encrypted password.
+-create login api
+-compare passwords and throw errors if email or password is invalid
+
+# EP- 10
