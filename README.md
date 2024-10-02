@@ -73,3 +73,10 @@
 -set the expiry of jwt token nd cookies for 7days .
 -create userschema method to get jwt
 -create userSchema method to compare passwords
+
+# EP - 11
+
+-EXPLORE read docs for express.Router
+-create routes folder for managing auth,profile,request routers
+-create routers - auth , profile, request
+-import this routers in app.js
