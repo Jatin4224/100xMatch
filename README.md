@@ -62,3 +62,14 @@
 -compare passwords and throw errors if email or password is invalid
 
 # EP- 10
+
+-install jsonwebtoken nd cookieparser
+-send dummy cookie to user
+-get profile api nd check if u get the cookie back /res.cookie
+-create jwt token send it to user
+-read cookie inside the profile api nd get the user who is logged in
+-write useraUTH MIDDLEWARE
+-add userauth middleware in profile api nd connection request api
+-set the expiry of jwt token nd cookies for 7days .
+-create userschema method to get jwt
+-create userSchema method to compare passwords
