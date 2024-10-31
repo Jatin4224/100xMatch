@@ -5,3 +5,7 @@ const connectDb = async () => {
 };
 
 module.exports = connectDb;
+
+// current string of cluter 4224 created by jatinvitbhopal account
+const URI =
+  "mongodb+srv://jatin4224:MyrigWDrXvTCGMeB@cluster4224.cctoa.mongodb.net/";

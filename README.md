@@ -1,5 +1,10 @@
 # DevMatch
 
+# Ep-04
+
+-install postman app
+-create workspace/collection make a test api get call
+
 # Ep-05
 
 -multiple route handlers
