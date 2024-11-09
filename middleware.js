@@ -1,4 +1,5 @@
 const express = require("express");
+const { Module } = require("module");
 
 const app = express();
 
@@ -42,7 +43,7 @@ app.listen("8888", () => {
 //for writing clean code u make middleware or utils folder where we create file auth.js
 // and write function
 
-export const adminAuth = (req, res, next) => {
+const adminAuth = (req, res, next) => {
   const token = "xyz";
   const isAdminAuthorized = token === "xyz";
 
@@ -51,6 +52,10 @@ export const adminAuth = (req, res, next) => {
   } else {
     next();
   }
+};
+
+Module.exports = {
+  adminAuth,
 };
 
 // and i can import it in app.js
