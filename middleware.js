@@ -38,3 +38,25 @@ app.listen("8888", () => {
 });
 
 //this middleware only be called for /admin
+
+//for writing clean code u make middleware or utils folder where we create file auth.js
+// and write function
+
+export const adminAuth = (req, res, next) => {
+  const token = "xyz";
+  const isAdminAuthorized = token === "xyz";
+
+  if (!isAdminAuthorized) {
+    res.status(401).send("Unauthorized request");
+  } else {
+    next();
+  }
+};
+
+// and i can import it in app.js
+
+const { adminAuth } = require("path");
+
+// and i can just pass in middleware
+
+app.use("/admin", adminAuth);
