@@ -5,6 +5,10 @@
 -install postman app
 -create workspace/collection make a test api get call
 
+-write logic to handle all the post,put,patch,delete,get api calls on postman
+
+-advance routing concepts
+
 # Ep-05
 
 -multiple route handlers

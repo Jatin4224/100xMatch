@@ -15,9 +15,24 @@ const express = require("express");
 
 const app = express();
 
-app.use((req, res) => {
-  res.send("hello world");
-});
+app.post(
+  "/user",
+  (req, res, next) => {
+    console.log("handling request");
+    next();
+  },
+  (req, res, next) => {
+    console.log("handling the route user 2");
+    next();
+  },
+  (req, res, next) => {
+    console.log("handling route 2");
+    next();
+  },
+  (req, res, next) => {
+    res.send("5th response");
+  }
+);
 
 app.listen(3000, () => {
   console.log("server running on port 3000");
