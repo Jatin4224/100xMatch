@@ -2,6 +2,8 @@ const express = require("express");
 const connectDb = require("./config/database");
 const app = express();
 const User = require("./models/user");
+const { validateSignUp } = require("./utils/validate");
+const bcrypt = require("bcrypt");
 //creating apis
 
 //using json middleware so we can read body data
@@ -10,8 +12,21 @@ app.use(express.json());
 app.post("/signup", async (req, res) => {
   // console.log(req.body);
   // logic to add data into a database
-  const user = new User(req.body);
   try {
+    validateSignUp(req);
+
+    //bcrypting pssword
+    const { firstName, lastName, password, email } = req.body;
+
+    const hashPassword = await bcrypt.hash(password, 10);
+    console.log(hashPassword);
+    const user = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashPassword,
+    });
+
     await user.save();
     res.send("User added succesfully");
   } catch (err) {
