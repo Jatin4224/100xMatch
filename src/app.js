@@ -16,14 +16,15 @@ app.post("/signup", async (req, res) => {
     validateSignUp(req);
 
     //bcrypting pssword
-    const { firstName, lastName, password, email } = req.body;
+    const { firstName, lastName, password, emailId } = req.body;
 
     const hashPassword = await bcrypt.hash(password, 10);
     console.log(hashPassword);
+    //creating a new instance-The new keyword is only used when creating a new document instance
     const user = new User({
       firstName,
       lastName,
-      email,
+      emailId,
       password: hashPassword,
     });
 
@@ -34,6 +35,25 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {
+  //reading data
+  try {
+    const { emailId, password } = req.body;
+
+    const user = await User.findOne({ emailId: emailId });
+    if (!user) {
+      throw new Error("user is not signup up");
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (isPasswordValid) {
+      res.send("login succes");
+    } else {
+      throw new Error("invalid credentials ");
+    }
+  } catch (err) {
+    res.status(400).send("error login user " + err.message);
+  }
+});
 // feed API - Get all the users from database
 app.get("/user", async (req, res) => {
   const userEmail = req.body.emailId;

@@ -1,9 +1,9 @@
 const validator = require("validator");
 
 const validateSignUp = (req) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, emailId, password } = req.body;
 
-  if (!firstName || !lastName || !email || !password) {
+  if (!firstName || !lastName || !emailId || !password) {
     throw new Error("Please fill in all the details.");
   }
   if (firstName.length > 20 || lastName.length > 20) {
@@ -11,7 +11,7 @@ const validateSignUp = (req) => {
       "First name and last name must be less than 20 characters."
     );
   }
-  if (!validator.isEmail(email)) {
+  if (!validator.isEmail(emailId)) {
     throw new Error("Invalid email address.");
   }
   if (!validator.isStrongPassword(password)) {
