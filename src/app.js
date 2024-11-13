@@ -71,18 +71,30 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", async (req, res) => {
   //validating cookie
-  const cookies = req.cookies;
-  const { token } = cookies;
-  //validating token
-  const decodedMessage = await jwt.verify(token, "872069");
-  // console.log(decodedMessage);
+  try {
+    const cookies = req.cookies;
+    const { token } = cookies;
+    //handling error cases
+    if (!token) {
+      throw new Error("Invalid creadentials");
+    }
+    //validating token
+    const decodedMessage = await jwt.verify(token, "872069");
+    // console.log(decodedMessage);
 
-  const { _id } = decodedMessage;
-  console.log("Logged in user is:" + _id);
-  //getting user info
-
-  console.log(cookies);
-  res.send("cookies ready ");
+    const { _id } = decodedMessage;
+    console.log("Logged in user is:" + _id);
+    //getting user info
+    const user = await User.findById(_id);
+    if (!user) {
+      throw new Error("user not valid");
+    }
+    res.send(user);
+    //console.log(cookies);
+    res.send("cookies ready ");
+  } catch (err) {
+    res.status(400).send("error" + err.message);
+  }
 });
 // feed API - Get all the users from database
 app.get("/user", async (req, res) => {
