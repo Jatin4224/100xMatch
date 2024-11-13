@@ -4,10 +4,14 @@ const app = express();
 const User = require("./models/user");
 const { validateSignUp } = require("./utils/validate");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+
 //creating apis
 
 //using json middleware so we can read body data
 app.use(express.json());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
   // console.log(req.body);
@@ -44,15 +48,41 @@ app.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("user is not signup up");
     }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (isPasswordValid) {
-      res.send("login succes");
-    } else {
-      throw new Error("invalid credentials ");
-    }
+    // const isPasswordValid = await bcrypt.compare(password, user.password);
+    // if (isPasswordValid) {
+    //create jwt token
+
+    //add the token to the cookie and send the response back
+
+    //create token
+    const token = await jwt.sign({ _id: user._id }, "872069");
+    console.log(token);
+
+    //sending token back to the user
+    res.cookie("token", token);
+
+    res.send("login succes");
+    // } else {
+    //   throw new Error("invalid credentials ");}
   } catch (err) {
     res.status(400).send("error login user " + err.message);
   }
+});
+
+app.get("/profile", async (req, res) => {
+  //validating cookie
+  const cookies = req.cookies;
+  const { token } = cookies;
+  //validating token
+  const decodedMessage = await jwt.verify(token, "872069");
+  // console.log(decodedMessage);
+
+  const { _id } = decodedMessage;
+  console.log("Logged in user is:" + _id);
+  //getting user info
+
+  console.log(cookies);
+  res.send("cookies ready ");
 });
 // feed API - Get all the users from database
 app.get("/user", async (req, res) => {
@@ -98,6 +128,7 @@ app.patch("/user", async (req, res) => {
   console.log(user);
   res.send("user updated success");
 });
+
 connectDb()
   .then(() => {
     console.log("db connection success");
