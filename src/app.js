@@ -91,7 +91,7 @@ app.get("/profile", async (req, res) => {
     }
     res.send(user);
     //console.log(cookies);
-    res.send("cookies ready ");
+    // res.send("cookies ready ");
   } catch (err) {
     res.status(400).send("error" + err.message);
   }
