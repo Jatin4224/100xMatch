@@ -2,7 +2,6 @@ const { z } = require("zod");
 const validator = require("validator");
 
 const validatedData = (req) => {
-  // Define Zod schema for validation
   const requiredBody = z.object({
     firstName: z.string().min(1, "First name is required."),
     lastName: z.string().min(1, "Last name is required."),
@@ -19,17 +18,12 @@ const validatedData = (req) => {
       }),
   });
 
-  // Parse and validate the request body
   const parsedData = requiredBody.safeParse(req.body);
 
   if (!parsedData.success) {
-    // Throw error if validation fails
-    throw new Error(
-      JSON.stringify(parsedData.error.format()) // Format Zod error for clarity
-    );
+    throw new Error(JSON.stringify(parsedData.error.format()));
   }
 
-  // Return validated data
   return parsedData.data;
 };
 
