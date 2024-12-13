@@ -107,3 +107,31 @@
 -what is the pros and cons of creating indexes.
 -what if i create lot of indexes?disadvantages
 -main line - always think about cornes cases so make secure api from attackers.
+
+# EP-13
+
+-write code with proper validations for POST/REQUEST/REVIEW/:STATUS/:REQUESTID
+
+-thought process - POST VS GET
+-how can attacker exploit your post api by sending some malesious data into db. think attacker as this attacker can put something into db
+.save() line will be the second last line of your api before it just write lots of validations.
+
+-Now, in GET api we will 100% sure that the user is authorized dn loggedin user is verified user nd user is requesting correct data within his scope.
+
+-create API- /user/requests/receieved
+
+-create API-/user/connections
+
+//this will give the matches - means it gives u information about who is connected to you.
+
+userRouter.get("/user/connections",userAuth, async(req,res)=> {
+//suppose setu sent request to jatin and jatin accepted it now setu nd jatin both can see information about new connection.
+//so you have to find it from connectionRequests connections, and we are concern about status accepted only.
+then we will check whether the login user is fromuser it or toUserId.
+
+//setu -> jatin => accepted
+//jatin => mark => accepted
+const connectionRequests = await Connection.find({
+
+})
+})
