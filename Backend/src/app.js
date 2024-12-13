@@ -6,9 +6,12 @@ const bcrypt = require("bcrypt");
 const port = process.env.PORT || 4000;
 app.use(express.json());
 const User = require("./models/user");
+const validator = require("validator");
+const validatedData = require("./utils/validate");
 connectDb();
 
 app.post("/signup", async (req, res) => {
+  validatedData(req);
   const { email, password } = req.body;
 
   //hashing
