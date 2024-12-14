@@ -4,20 +4,24 @@ require("dotenv").config();
 const connectDb = require("./config/db");
 const bcrypt = require("bcrypt");
 const port = process.env.PORT || 4000;
-app.use(express.json());
+
 const User = require("./models/user");
-const validator = require("validator");
+const cookieParser = require("cookie-parser");
 const validatedData = require("./utils/validate");
+app.use(express.json());
+app.use(cookieParser());
 connectDb();
 
 app.post("/signup", async (req, res) => {
   try {
     validatedData(req);
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName } = req.body;
 
     //hashing
     const hashedPassowrd = await bcrypt.hash(password, 10);
     const user = new User({
+      firstName,
+      lastName,
       email,
       password: hashedPassowrd,
     });
@@ -42,6 +46,7 @@ app.get("/signin", async (req, res) => {
 
     const loggedInUser = await bcrypt.compare(password, user.password);
     if (loggedInUser) {
+      res.cookie("token", "hsbdfabfhab");
       res.status(200).json({
         message: `logged in user ${user}`,
       });
@@ -51,6 +56,12 @@ app.get("/signin", async (req, res) => {
   } catch (err) {
     res.send(err.message);
   }
+});
+
+app.get("/profile", async (req, res) => {
+  const cookie = req.cookies;
+  console.log(cookie);
+  res.send("cookie found");
 });
 app.listen(port, () => {
   console.log("server running fine");
