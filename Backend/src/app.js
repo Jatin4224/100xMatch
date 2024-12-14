@@ -4,7 +4,8 @@ require("dotenv").config();
 const connectDb = require("./config/db");
 const bcrypt = require("bcrypt");
 const port = process.env.PORT || 4000;
-
+const jwtsecret = process.env.JWT_SECRET;
+const jwt = require("jsonwebtoken");
 const User = require("./models/user");
 const cookieParser = require("cookie-parser");
 const validatedData = require("./utils/validate");
@@ -46,7 +47,10 @@ app.get("/signin", async (req, res) => {
 
     const loggedInUser = await bcrypt.compare(password, user.password);
     if (loggedInUser) {
-      res.cookie("token", "hsbdfabfhab");
+      const token = jwt.sign({ _id: email }, jwtsecret);
+      res.cookie("token", token);
+
+      //verify the token
       res.status(200).json({
         message: `logged in user ${user}`,
       });
@@ -60,6 +64,9 @@ app.get("/signin", async (req, res) => {
 
 app.get("/profile", async (req, res) => {
   const cookie = req.cookies;
+  const { token } = cookie;
+
+  const validtoken = jwt.verify();
   console.log(cookie);
   res.send("cookie found");
 });
