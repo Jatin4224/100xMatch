@@ -36,13 +36,13 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.get("/signin", async (req, res) => {
+app.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email: email });
     if (!user) {
-      throw new error("user is not found");
+      throw new Error("user is not found");
     }
 
     const loggedInUser = await bcrypt.compare(password, user.password);
@@ -63,12 +63,26 @@ app.get("/signin", async (req, res) => {
 });
 
 app.get("/profile", async (req, res) => {
-  const cookie = req.cookies;
-  const { token } = cookie;
+  try {
+    const { token } = req.cookies;
 
-  const validtoken = jwt.verify();
-  console.log(cookie);
-  res.send("cookie found");
+    // Check if token exists
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized: No token provided" });
+    }
+
+    // Verify the token
+    const decodedMessage = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded JWT:", decodedMessage);
+
+    res
+      .status(200)
+      .json({ message: "Token verified", userId: decodedMessage._id });
+  } catch (err) {
+    res.status(403).json({ message: "Invalid or expired token" });
+  }
 });
 app.listen(port, () => {
   console.log("server running fine");
