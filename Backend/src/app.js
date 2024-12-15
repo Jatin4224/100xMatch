@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const User = require("./models/user");
 const cookieParser = require("cookie-parser");
 const validatedData = require("./utils/validate");
+const userAuth = require("./middleware/auth");
 app.use(express.json());
 app.use(cookieParser());
 connectDb();
@@ -47,7 +48,7 @@ app.post("/signin", async (req, res) => {
 
     const loggedInUser = await bcrypt.compare(password, user.password);
     if (loggedInUser) {
-      const token = jwt.sign({ _id: email }, jwtsecret);
+      const token = jwt.sign({ _id: user._id }, jwtsecret);
       res.cookie("token", token);
 
       //verify the token
@@ -62,26 +63,14 @@ app.post("/signin", async (req, res) => {
   }
 });
 
-app.get("/profile", async (req, res) => {
+app.get("/profile", userAuth, async (req, res) => {
   try {
-    const { token } = req.cookies;
-
-    // Check if token exists
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized: No token provided" });
-    }
-
-    // Verify the token
-    const decodedMessage = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded JWT:", decodedMessage);
-
-    res
-      .status(200)
-      .json({ message: "Token verified", userId: decodedMessage._id });
-  } catch (err) {
-    res.status(403).json({ message: "Invalid or expired token" });
+    const user = req.user;
+    res.send(user);
+  } catch (error) {
+    res.status(400).json({
+      message: "error" + error.message,
+    });
   }
 });
 app.listen(port, () => {
