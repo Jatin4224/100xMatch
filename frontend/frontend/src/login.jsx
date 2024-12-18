@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("parth@example.com");
+  const [password, setPassword] = useState("Parth4224@@");
   const [buttonMessage, setButtonMessage] = useState("Login");
   const handleLogin = async () => {
     try {
@@ -34,7 +34,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center pt-40">
-      <div className="card bg-base-400 w-96 shadow-sm bg-base-200">
+      <div className="card bg-base-400 w-96 shadow-lg bg-base-200">
         <div className="card-body">
           <h2 className="card-title flex justify-center">Login</h2>
           {console.log(email)}
