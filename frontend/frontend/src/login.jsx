@@ -3,7 +3,7 @@ import axios from "axios";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [buttonMessage, setButtonMessage] = useState("Login");
   const handleLogin = async () => {
     try {
       const res = await axios.post("http://localhost:3000/api/v1/signin", {
@@ -18,6 +18,7 @@ const Login = () => {
       }
 
       console.log("Login successful:", res.data);
+      setButtonMessage("You’re home, 100x Dev. Let’s innovate together!😉");
     } catch (err) {
       if (err.response) {
         console.error("Server Error:", err.response.data);
@@ -27,7 +28,7 @@ const Login = () => {
       } else {
         console.error("Error Message:", err.message);
       }
-      alert("Something went wrong. Please try again.");
+      setButtonMessage("Failed!🥺🥺");
     }
   };
 
@@ -78,7 +79,7 @@ const Login = () => {
             />
           </label>
           <button className="btn btn-outline btn-error" onClick={handleLogin}>
-            Login
+            {buttonMessage}
           </button>
         </div>
       </div>
