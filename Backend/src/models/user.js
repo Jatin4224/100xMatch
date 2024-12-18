@@ -12,9 +12,6 @@ const userSchema = new Schema({
   about: String,
   gender: String,
   age: Number,
-  skills: {
-    type: [String],
-  },
 });
 
 module.exports = mongoose.model("User", userSchema);

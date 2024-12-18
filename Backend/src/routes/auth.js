@@ -33,27 +33,34 @@ authRouter.post("/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Check if the user exists
     const user = await User.findOne({ email: email });
     if (!user) {
-      throw new Error("user is not found");
+      return res.status(404).json({ message: "User not found" });
     }
 
-    const loggedInUser = await bcrypt.compare(password, user.password);
-    if (loggedInUser) {
-      const token = jwt.sign({ _id: user._id }, jwtsecret, {
-        expiresIn: "24h",
-      });
-      res.cookie("token", token);
-
-      //verify the token
-      res.status(200).json({
-        message: `logged in user ${user}`,
-      });
-    } else {
-      res.status(404).send("user not found");
+    // Validate password
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
+
+    // Generate JWT token
+    const token = jwt.sign({ _id: user._id }, jwtsecret, { expiresIn: "24h" });
+
+    // Set cookie and respond with user details
+    res.cookie("token", token, { httpOnly: true, secure: false }); // Adjust options in production
+    return res.status(200).json({
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        email: user.email,
+      },
+      token: token,
+    });
   } catch (err) {
-    res.send(err.message);
+    console.error("Signin Error:", err);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

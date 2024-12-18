@@ -7,3 +7,6 @@
 6. setup Routing -> install react router dom
 7. create BrowserRouter using outlet , read about chilren routes , revise routing from namsteReact
 8. create Footer component -> stick to the bootom -> fixed bottom-0 class
+9. install axios
+10. cors- install with credentials : origin,credentials
+11. add credentials to axios
