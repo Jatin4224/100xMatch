@@ -22,6 +22,7 @@ const Navbar = () => {
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            role="menu"
           >
             <li>
               <a>Homepage</a>
@@ -35,8 +36,9 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
+
       <div className="navbar-center">
-        <a className=" btn-ghost text-xl">
+        <a className="btn-ghost text-xl">
           100
           <span className="text-red-500 inline text-bold shadow-lg">x</span>
           Match
@@ -44,6 +46,36 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end">
+        <div className="dropdown dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar"
+          >
+            <div className="w-10 rounded-full">
+              <img
+                alt="Tailwind CSS Navbar component"
+                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              />
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            role="menu"
+          >
+            <li>
+              <a>Profile</a>
+            </li>
+            <li>
+              <a>Settings</a>
+            </li>
+            <li>
+              <a>Logout</a>
+            </li>
+          </ul>
+        </div>
+
         <button className="btn btn-ghost btn-circle">
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -10,3 +10,11 @@
 9. install axios
 10. cors- install with credentials : origin,credentials
 11. add credentials to axios
+12. install redux
+13. create folder utils nd file appStore.js where we create redux store
+14. create a configureStore => add provider => create a slice export -> add reducer to store.
+15. now we will save the data which we are getting afte hitting login in redux store.(dispatch an action)
+16. dispatch(addUser(res.data)) nd add redux toolkit on chrome
+17. login and see if your data is coming porpely in the store
+18. NavBar should update as soon as user logs in
+19. refactor the code adding constants files + componentns folder
