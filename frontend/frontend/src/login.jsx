@@ -37,8 +37,7 @@ const Login = () => {
       <div className="card bg-base-400 w-96 shadow-lg bg-base-200">
         <div className="card-body">
           <h2 className="card-title flex justify-center">Login</h2>
-          {console.log(email)}
-          {console.log(password)}
+
           <label className="input input-bordered flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

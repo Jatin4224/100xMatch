@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Add perspective to the parent */
+/* Add perspective to the parent */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Styling for the card with a red shadow */

@@ -49,14 +49,7 @@ authRouter.post("/signin", async (req, res) => {
 
     // Set cookie and respond with user details
     res.cookie("token", token, { httpOnly: true, secure: false }); // Adjust options in production
-    return res.status(200).json({
-      message: "Login successful",
-      user: {
-        _id: user._id,
-        email: user.email,
-      },
-      token: token,
-    });
+    return res.send(user);
   } catch (err) {
     console.error("Signin Error:", err);
     return res.status(500).json({ message: "Internal Server Error" });
