@@ -1,6 +1,6 @@
 const express = require("express");
 const authRouter = express.Router();
-const validatedData = require("../utils/validate");
+const { validatedData } = require("../utils/validate");
 const jwtsecret = process.env.JWT_SECRET;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -44,11 +44,9 @@ authRouter.post("/signin", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate JWT token
     const token = jwt.sign({ _id: user._id }, jwtsecret, { expiresIn: "24h" });
 
-    // Set cookie and respond with user details
-    res.cookie("token", token, { httpOnly: true, secure: false }); // Adjust options in production
+    res.cookie("token", token, { httpOnly: true, secure: false });
     return res.send(user);
   } catch (err) {
     console.error("Signin Error:", err);
