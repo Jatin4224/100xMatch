@@ -6,6 +6,7 @@ const express = require("express");
 const requestRouter = express.Router();
 const Request = require("../models/request");
 const userAuth = require("../middleware/auth");
+const User = require("../models/user");
 
 requestRouter.post(
   "/request/send/:status/:toUserid",
@@ -16,6 +17,32 @@ requestRouter.post(
       const toUserId = req.params.toUserid;
       const status = req.params.status;
 
+      const allowedStatus = ["interested", "ignored"];
+      if (!allowedStatus.includes(status)) {
+        return res.status(400).json({
+          message: "invalid status" + status,
+        });
+      }
+
+      const existingConnectionRequest = await Request.findOne({
+        $or: [
+          { fromUserId, toUserId },
+          { fromUserId: toUserId, toUserId: fromUserId },
+        ],
+      });
+
+      if (existingConnectionRequest) {
+        return res.status(400).json({
+          message: "request already pending",
+        });
+      }
+
+      const toUser = await User.findById(toUserId);
+      if (!toUser) {
+        return res.status(400).json({
+          message: "request already pending",
+        });
+      }
       const connectionRequest = new Request({
         fromUserId,
         toUserId,

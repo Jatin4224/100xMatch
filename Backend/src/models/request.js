@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { equals } = require("validator");
 const Schema = mongoose.Schema;
 
 const requestSchema = new Schema(
@@ -26,5 +27,13 @@ const requestSchema = new Schema(
     timestamps: true,
   }
 );
+requestSchema.pre("save", function (next) {
+  const request = this;
 
+  if (request.fromUserId.equals(request.toUserId)) {
+    throw new Error("fromUserId and toUserId cannot be the same.");
+  }
+
+  next();
+});
 module.exports = mongoose.model("Request", requestSchema);
