@@ -33,8 +33,15 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center pt-40">
-      <div className="card bg-base-400 w-96 shadow-lg bg-base-200">
+    <div className="flex justify-center pt-40 relative">
+      <div className="absolute top-10 left-0 right-0 h-1/2 flex justify-center ">
+        <img
+          src="https://media.tenor.com/nP7Hl7wEZOcAAAAi/hacker-meme-hacker.gif"
+          alt="Hacker Meme"
+          className="w-25 h-25 object-cover shadow-lg"
+        />
+      </div>
+      <div className="card bg-base-400 w-96 shadow-lg bg-base-200  inset-x-0 top-20 hover:shadow-[0px_4px_30px_0px_rgba(255,255,255,0.3)]">
         <div className="card-body">
           <h2 className="card-title flex justify-center">Login</h2>
 
