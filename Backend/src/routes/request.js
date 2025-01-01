@@ -68,12 +68,12 @@ requestRouter.post("/request/review/:status/requestId", async (req, res) => {
     const allowedStatus = ["accepted", "rejected"];
 
     if (!allowedStatus.includes(status)) {
-      return res.status(400).json({ message: "status not allowed" });
+      return res.status(400).json({ message: "status is  not allowed" });
     }
 
     const connectionRequest = await Request.findOne({
       _id: requestId,
-      toUserId: loggedInUser._id,
+      toUserId: loggedInUser._id, //elon is the one who is accepting the request
       status: "intrested",
     });
 
