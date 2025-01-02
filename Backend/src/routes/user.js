@@ -2,7 +2,7 @@ const express = require("express");
 const Request = require("../models/request");
 const userRouter = express.Router();
 const userAuth = require("../middleware/auth");
-
+const User = require("../models/user");
 const USER_SAFE_DATA = "firstName LastName age gender about";
 userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   try {
@@ -59,7 +59,16 @@ userRouter.get("/feed", userAuth, async (req, res) => {
       hideUsersFromFeed.add(req.toUserId.toString());
     });
 
-    res.send(connectionRequests);
+    const users = await User.find({
+      $and: [
+        { _id: { $nin: Array.from(hideUsersFromFeed) } },
+        {
+          _id: { $ne: loggedInUser._id },
+        },
+      ],
+    }).select(USER_SAFE_DATA);
+
+    res.send(users);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
