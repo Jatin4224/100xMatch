@@ -2,17 +2,24 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "./utils/userSlice";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("parth@example.com");
   const [password, setPassword] = useState("Parth4224@@");
   const [buttonMessage, setButtonMessage] = useState("Login");
   const dispatch = useDispatch();
   const handleLogin = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/api/v1/signin", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/v1/signin",
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
 
       if (res.status === 200 && res.data === "user is not found") {
         console.error("Error:", res.data);
@@ -23,7 +30,9 @@ const Login = () => {
 
       console.log("Login successful:", res.data);
       dispatch(addUser(res.data));
+
       setButtonMessage("You’re home, 100x Dev. Let’s innovate together!😉");
+      return navigate("/feed");
     } catch (err) {
       if (err.response) {
         console.error("Server Error:", err.response.data);
