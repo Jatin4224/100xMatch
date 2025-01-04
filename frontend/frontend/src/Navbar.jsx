@@ -51,7 +51,10 @@ const Navbar = () => {
 
       <div className="navbar-end">
         {user && (
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end flex gap-10 ">
+            <div className="mt-3 text-grey-200 text-bold">
+              <p>welcome {user.firstName}</p>
+            </div>
             <div
               tabIndex={0}
               role="button"
@@ -61,6 +64,7 @@ const Navbar = () => {
                 <img alt="user photo" src={user.photoUrl} />
               </div>
             </div>
+
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
