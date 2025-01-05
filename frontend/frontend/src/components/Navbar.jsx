@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
@@ -71,10 +72,10 @@ const Navbar = () => {
               role="menu"
             >
               <li>
-                <a>Profile</a>
+                <Link to="/profile">Profile</Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
                 <a>Logout</a>
