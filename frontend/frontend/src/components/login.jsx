@@ -7,6 +7,7 @@ import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [email, setEmail] = useState("parth@example.com");
   const [password, setPassword] = useState("Parth4224@@");
   const [buttonMessage, setButtonMessage] = useState("Login");
@@ -35,14 +36,8 @@ const Login = () => {
       setButtonMessage("You’re home, 100x Dev. Let’s innovate together!😉");
       return navigate("/feed");
     } catch (err) {
-      if (err.response) {
-        console.error("Server Error:", err.response.data);
-        console.error("Status Code:", err.response.status);
-      } else if (err.request) {
-        console.error("No response received:", err.request);
-      } else {
-        console.error("Error Message:", err.message);
-      }
+      setError(err?.request?.statusText);
+
       setButtonMessage("Failed!🥺🥺");
     }
   };
@@ -102,6 +97,7 @@ const Login = () => {
           <button className="btn btn-outline btn-error" onClick={handleLogin}>
             {buttonMessage}
           </button>
+          <p className="text-red-600">{error}</p>
         </div>
       </div>
     </div>
