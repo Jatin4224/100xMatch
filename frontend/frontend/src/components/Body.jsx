@@ -3,10 +3,11 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useEffect } from "react";
 const Body = () => {
+  const userData = useSelector((store) => store.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const fetchUser = async () => {
@@ -22,7 +23,9 @@ const Body = () => {
   };
 
   useEffect(() => {
-    fetchUser();
+    if (!userData) {
+      fetchUser();
+    }
   }, []);
 
   return (
