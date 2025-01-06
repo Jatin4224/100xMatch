@@ -17,7 +17,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="flex justify-center pt-40 relative">
+    <div className="flex justify-center pt-10 relative ">
       <div className="absolute top-10 left-0 right-0 h-1/2 flex justify-center"></div>
       <div className="card bg-base-400 w-96 bg-base-200 top-20 hover:shadow-[0px_4px_30px_0px_rgba(255,255,255,0.3)]">
         <div className="card-body">
