@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useNavigate, Router } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center px-6">
       <header className="w-full max-w-6xl flex justify-between items-center py-6">
@@ -16,8 +18,9 @@ const Home = () => {
           className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-white font-semibold"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={() => navigate("/login")}
         >
-          Join Now
+          Login
         </motion.button>
       </header>
 
@@ -39,8 +42,9 @@ const Home = () => {
           className="mt-6 bg-red-500 hover:bg-red-600 px-6 py-3 rounded-lg text-lg font-semibold"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={() => navigate("/signup")}
         >
-          Get Started
+          Sign up
         </motion.button>
       </motion.main>
 
