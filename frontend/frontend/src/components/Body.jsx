@@ -1,38 +1,45 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import axios from "axios";
-import { BASE_URL } from "../utils/constants";
+import api from "../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useEffect } from "react";
-import Home from "./Home";
+import { useEffect, useState } from "react";
+
 const Body = () => {
   const userData = useSelector((store) => store.user);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get(BASE_URL + "/profile/view");
-      dispatch(addUser(res.data));
-    } catch (err) {
-      if (err.status === 401) {
-        navigate("/login");
-      }
-      console.log(err);
-    }
-  };
+  const [authChecked, setAuthChecked] = useState(Boolean(userData));
 
   useEffect(() => {
-    if (!userData) {
-      fetchUser();
-    }
+    if (userData) return;
+    // restore the session from the cookie on page load
+    const fetchUser = async () => {
+      try {
+        const res = await api.get("/profile/view");
+        dispatch(addUser(res.data.data));
+      } catch (err) {
+        if (err?.response?.status !== 401) console.error(err);
+      } finally {
+        setAuthChecked(true);
+      }
+    };
+    fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <Outlet />
+      <main className="flex-1 px-4 py-8">
+        {authChecked ? (
+          <Outlet />
+        ) : (
+          <div className="flex justify-center mt-20">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        )}
+      </main>
       <Footer />
     </div>
   );
