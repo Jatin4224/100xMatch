@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api, { getErrorMessage } from "../utils/api";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,8 +17,8 @@ const Login = () => {
     setLoading(true);
     try {
       const res = await api.post("/signin", { email, password });
+      // GuestRoute redirects once the user is set
       dispatch(addUser(res.data.data));
-      navigate(location.state?.from || "/feed", { replace: true });
     } catch (err) {
       setError(getErrorMessage(err));
     } finally {

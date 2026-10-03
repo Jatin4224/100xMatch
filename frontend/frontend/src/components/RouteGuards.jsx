@@ -11,11 +11,13 @@ export const ProtectedRoute = () => {
   return <Outlet />;
 };
 
-// only for logged-out users (login/signup); others are sent to the feed
-export const GuestRoute = () => {
+// only for logged-out users (login/signup). Once a user is set (already logged in,
+// or just logged in on this page) they go back to where they came from, or redirectTo.
+export const GuestRoute = ({ redirectTo = "/feed" }) => {
   const user = useSelector((store) => store.user);
+  const location = useLocation();
   if (user) {
-    return <Navigate to="/feed" replace />;
+    return <Navigate to={location.state?.from || redirectTo} replace />;
   }
   return <Outlet />;
 };
