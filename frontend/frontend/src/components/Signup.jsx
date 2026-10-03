@@ -3,12 +3,13 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import api, { getErrorMessage } from "../utils/api";
 import { addUser } from "../utils/userSlice";
+import AuthCard from "./AuthCard";
 
 const FIELDS = [
-  { name: "firstName", type: "text", placeholder: "First Name", autoComplete: "given-name" },
-  { name: "lastName", type: "text", placeholder: "Last Name", autoComplete: "family-name" },
-  { name: "email", type: "email", placeholder: "Email", autoComplete: "email" },
-  { name: "password", type: "password", placeholder: "Password", autoComplete: "new-password" },
+  { name: "firstName", type: "text", label: "First name", placeholder: "Ada", autoComplete: "given-name" },
+  { name: "lastName", type: "text", label: "Last name", placeholder: "Lovelace", autoComplete: "family-name" },
+  { name: "email", type: "email", label: "Email", placeholder: "you@devmail.com", autoComplete: "email" },
+  { name: "password", type: "password", label: "Password", placeholder: "••••••••", autoComplete: "new-password" },
 ];
 
 const Signup = () => {
@@ -41,48 +42,51 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center">
-      <form
-        onSubmit={handleSignup}
-        className="card w-full max-w-sm shadow-lg bg-base-200 hover:shadow-[0px_4px_30px_0px_rgba(255,255,255,0.3)]"
-      >
-        <div className="card-body gap-4">
-          <h2 className="card-title justify-center">Create your account</h2>
-          {FIELDS.map((field) => (
+    <AuthCard
+      title="Join the fun"
+      note="your dev crush is waiting"
+      onSubmit={handleSignup}
+    >
+      <div className="grid gap-4 sm:grid-cols-2">
+        {FIELDS.map(({ label, ...field }) => (
+          <label
+            key={field.name}
+            className={`flex flex-col gap-1 font-semibold ${
+              field.name === "email" || field.name === "password"
+                ? "sm:col-span-2"
+                : ""
+            }`}
+          >
+            {label}
             <input
-              key={field.name}
               {...field}
-              className="input input-bordered"
+              className="input-pop"
               required
               value={form[field.name]}
               onChange={handleChange}
             />
-          ))}
-          <p className="text-xs opacity-70">
-            Password: 8+ characters with an uppercase letter, a lowercase
-            letter, a number and a symbol.
-          </p>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <button
-            type="submit"
-            className="btn btn-outline btn-error"
-            disabled={loading}
-          >
-            {loading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              "Sign up"
-            )}
-          </button>
-          <p className="text-center text-sm">
-            Already have an account?{" "}
-            <Link to="/login" className="link link-error">
-              Login
-            </Link>
-          </p>
-        </div>
-      </form>
-    </div>
+          </label>
+        ))}
+      </div>
+      <p className="text-xs text-ink/70">
+        Password: 8+ characters with an uppercase letter, a lowercase letter, a
+        number and a symbol.
+      </p>
+      {error && (
+        <p className="rounded-xl border-2 border-ink bg-blush/40 px-3 py-2 text-sm font-semibold">
+          {error}
+        </p>
+      )}
+      <button type="submit" className="btn-grape mt-2" disabled={loading}>
+        {loading ? "Creating..." : "Start matching 💘"}
+      </button>
+      <p className="text-center text-sm">
+        Already have an account?{" "}
+        <Link to="/login" className="font-bold text-grape underline">
+          Login
+        </Link>
+      </p>
+    </AuthCard>
   );
 };
 

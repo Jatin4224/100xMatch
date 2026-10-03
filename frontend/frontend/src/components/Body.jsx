@@ -5,6 +5,7 @@ import api from "../utils/api";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useEffect, useState } from "react";
+import { Spinner } from "./Doodles";
 
 const Body = () => {
   const userData = useSelector((store) => store.user);
@@ -31,14 +32,8 @@ const Body = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 px-4 py-8">
-        {authChecked ? (
-          <Outlet />
-        ) : (
-          <div className="flex justify-center mt-20">
-            <span className="loading loading-spinner loading-lg"></span>
-          </div>
-        )}
+      <main className="flex-1 px-4 py-10">
+        {authChecked ? <Outlet /> : <Spinner />}
       </main>
       <Footer />
     </div>

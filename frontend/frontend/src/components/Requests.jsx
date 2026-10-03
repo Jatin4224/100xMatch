@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import api, { getErrorMessage } from "../utils/api";
 import { addRequests, removeRequest } from "../utils/requestSlice";
 import { removeConnections } from "../utils/connectionSlice";
 import Avatar from "./Avatar";
+import { EmptyState, Spinner } from "./Doodles";
 
 const Requests = () => {
   const requests = useSelector((store) => store.requests);
@@ -39,58 +41,70 @@ const Requests = () => {
   };
 
   if (!requests) {
-    return error ? (
-      <p className="text-center text-red-500 mt-10">{error}</p>
-    ) : (
-      <div className="flex justify-center mt-20">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
+    return error ? <EmptyState title="Oops!" note={error} /> : <Spinner />;
+  }
+
+  if (requests.length === 0) {
+    return (
+      <EmptyState title="No love letters" note="...yet! keep swiping 💌">
+        <Link to="/feed" className="btn-grape mt-4">
+          Go to feed
+        </Link>
+      </EmptyState>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-8">Requests</h1>
-      {error && <p className="text-center text-red-500 mb-4">{error}</p>}
-      {requests.length === 0 ? (
-        <p className="text-center opacity-70">No pending requests.</p>
-      ) : (
-        <ul className="flex flex-col gap-4">
-          {requests.map((request) => {
-            const sender = request.fromUserId;
-            return (
-              <li
-                key={request._id}
-                className="flex flex-col sm:flex-row sm:items-center gap-4 bg-base-200 rounded-box p-4"
-              >
-                <Avatar user={sender} className="w-16" />
-                <div className="flex-1">
-                  <h2 className="font-bold text-lg">
-                    {sender.firstName} {sender.lastName}
-                  </h2>
-                  <p>{sender.about}</p>
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    className="btn btn-outline btn-sm"
-                    disabled={busyId === request._id}
-                    onClick={() => reviewRequest("rejected", request._id)}
-                  >
-                    Reject
-                  </button>
-                  <button
-                    className="btn btn-error btn-sm"
-                    disabled={busyId === request._id}
-                    onClick={() => reviewRequest("accepted", request._id)}
-                  >
-                    Accept
-                  </button>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+    <div className="mx-auto max-w-2xl">
+      <div className="mb-8 text-center">
+        <h1 className="title-bubble text-5xl md:text-6xl">Love letters</h1>
+        <p className="scribble mt-1 text-3xl">
+          {requests.length} dev{requests.length === 1 ? "" : "s"} think
+          {requests.length === 1 ? "s" : ""} you&apos;re cute
+        </p>
+      </div>
+      {error && (
+        <p className="mb-4 text-center font-semibold text-error">{error}</p>
       )}
+      <ul className="flex flex-col gap-5">
+        {requests.map((request, index) => {
+          const sender = request.fromUserId;
+          return (
+            <li
+              key={request._id}
+              className={`card-pop flex flex-col items-center gap-4 p-5 text-center sm:flex-row sm:text-left ${
+                index % 2 ? "sm:rotate-1" : "sm:-rotate-1"
+              }`}
+            >
+              <Avatar user={sender} className="w-20" textClass="text-2xl" />
+              <div className="flex-1">
+                <h2 className="font-bubble text-2xl">
+                  {sender.firstName} {sender.lastName}
+                </h2>
+                <p className="font-hand text-xl leading-tight">
+                  {sender.about || "wants to connect!"}
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  className="btn-plain !px-4"
+                  disabled={busyId === request._id}
+                  onClick={() => reviewRequest("rejected", request._id)}
+                >
+                  ✕ Pass
+                </button>
+                <button
+                  className="btn-grape !px-4"
+                  disabled={busyId === request._id}
+                  onClick={() => reviewRequest("accepted", request._id)}
+                >
+                  ♥ Accept
+                </button>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

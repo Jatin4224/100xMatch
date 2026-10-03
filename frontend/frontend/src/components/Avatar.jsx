@@ -1,32 +1,32 @@
 import { useState } from "react";
 
 // profile photo, falling back to initials when there is no (working) photo
-const Avatar = ({ user, className = "w-10" }) => {
-  const [broken, setBroken] = useState(false);
+const Avatar = ({ user, className = "w-10", textClass = "text-sm" }) => {
+  // remember which URL failed so a new URL gets a fresh try
+  const [brokenUrl, setBrokenUrl] = useState(null);
   const initials =
     `${user?.firstName?.[0] || ""}${user?.lastName?.[0] || ""}`.toUpperCase();
 
-  if (user?.photoUrl && !broken) {
+  if (user?.photoUrl && user.photoUrl !== brokenUrl) {
     return (
-      <div className="avatar">
-        <div className={`${className} rounded-full`}>
-          <img
-            alt={`${user.firstName} ${user.lastName}`}
-            src={user.photoUrl}
-            onError={() => setBroken(true)}
-          />
-        </div>
+      <div
+        className={`${className} aspect-square shrink-0 rounded-full border-[3px] border-ink overflow-hidden bg-grape-light`}
+      >
+        <img
+          alt={`${user.firstName} ${user.lastName}`}
+          src={user.photoUrl}
+          className="h-full w-full object-cover"
+          onError={() => setBrokenUrl(user.photoUrl)}
+        />
       </div>
     );
   }
 
   return (
-    <div className="avatar placeholder">
-      <div
-        className={`${className} rounded-full bg-neutral text-neutral-content`}
-      >
-        <span>{initials || "?"}</span>
-      </div>
+    <div
+      className={`${className} ${textClass} aspect-square shrink-0 rounded-full border-[3px] border-ink bg-sunny flex items-center justify-center font-bubble text-ink`}
+    >
+      {initials || "?"}
     </div>
   );
 };

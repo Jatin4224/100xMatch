@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+    /* soft polka dots, like poster paper */
+    background-image: radial-gradient(#e4d6bb 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+}
+
+@layer components {
+  /* chunky purple lettering with a black outline + drop shadow */
+  .title-bubble {
+    @apply font-bubble text-grape leading-[0.95] tracking-tight;
+    -webkit-text-stroke: 0.06em #16121d;
+    paint-order: stroke fill;
+    text-shadow: 0.06em 0.07em 0 #16121d;
+  }
+
+  /* handwritten note (yellow is kept for dark/purple backgrounds) */
+  .scribble {
+    @apply font-hand text-grape-dark;
+  }
+
+  /* sticker-style card: thick outline + hard shadow */
+  .card-pop {
+    @apply bg-base-100 border-[3px] border-ink rounded-[1.75rem] shadow-pop-lg;
+  }
+
+  .btn-pop {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-[3px] border-ink
+      px-6 py-2.5 font-semibold text-base shadow-pop transition-all duration-150
+      hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-pop-lg
+      active:translate-x-1 active:translate-y-1 active:shadow-none
+      disabled:pointer-events-none disabled:opacity-60;
+  }
+  .btn-grape {
+    @apply btn-pop bg-grape text-white;
+  }
+  .btn-sunny {
+    @apply btn-pop bg-sunny text-ink;
+  }
+  .btn-plain {
+    @apply btn-pop bg-base-100 text-ink;
+  }
+
+  .input-pop {
+    @apply w-full rounded-2xl border-[3px] border-ink bg-base-100 px-4 py-2.5 font-normal text-ink
+      placeholder:text-ink/40 shadow-pop-sm outline-none transition
+      focus:shadow-pop focus:border-grape;
+  }
+
+  .chip {
+    @apply inline-block rounded-full border-2 border-ink bg-sunny px-3 py-0.5 text-sm font-semibold shadow-pop-sm;
+  }
+
+  .sticker {
+    @apply inline-block rounded-xl border-[3px] border-ink bg-sunny px-3 py-1 font-bubble text-ink shadow-pop;
+  }
+}

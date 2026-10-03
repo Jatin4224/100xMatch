@@ -3,13 +3,21 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { removeUser } from "../utils/userSlice";
 import Avatar from "./Avatar";
+import { Bolt } from "./Doodles";
 
 const NAV_LINKS = [
-  { to: "/feed", label: "Feed" },
-  { to: "/connections", label: "Connections" },
-  { to: "/requests", label: "Requests" },
-  { to: "/profile", label: "Profile" },
+  { to: "/feed", label: "Feed", emoji: "💘" },
+  { to: "/requests", label: "Requests", emoji: "💌" },
+  { to: "/connections", label: "Matches", emoji: "🤝" },
+  { to: "/profile", label: "Profile", emoji: "✨" },
 ];
+
+const linkClass = ({ isActive }) =>
+  `rounded-full border-2 px-4 py-1.5 font-semibold transition ${
+    isActive
+      ? "border-ink bg-grape text-white shadow-pop-sm"
+      : "border-transparent hover:border-ink hover:bg-sunny"
+  }`;
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,83 +36,76 @@ const Navbar = () => {
     }
   };
 
-  const links = NAV_LINKS.map((link) => (
-    <li key={link.to}>
-      <NavLink to={link.to}>{link.label}</NavLink>
-    </li>
-  ));
-
   return (
-    <div className="navbar bg-base-200 shadow-lg px-4">
-      <div className="navbar-start">
-        {user && (
-          <div className="dropdown md:hidden">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h7"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              {links}
-            </ul>
-          </div>
-        )}
-        <Link to={user ? "/feed" : "/"} className="btn btn-ghost text-xl">
-          100
-          <span className="text-red-500 font-bold">x</span>
-          Match
+    <header className="sticky top-0 z-20 border-b-[3px] border-ink bg-base-100/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+        <Link
+          to={user ? "/feed" : "/"}
+          className="flex items-center gap-1 shrink-0"
+          aria-label="100xMatch home"
+        >
+          <Bolt className="w-7 -rotate-12" />
+          <span className="title-bubble text-3xl">
+            100<span className="text-sunny">x</span>Match
+          </span>
         </Link>
-      </div>
 
-      <div className="navbar-center hidden md:flex">
-        {user && <ul className="menu menu-horizontal px-1">{links}</ul>}
-      </div>
-
-      <div className="navbar-end gap-2">
-        {user ? (
-          <div className="dropdown dropdown-end flex items-center gap-4">
-            <span className="hidden sm:inline">welcome {user.firstName}</span>
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-              <Avatar user={user} />
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow top-full"
-            >
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <button onClick={handleLogout}>Logout</button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <>
-            <Link to="/login" className="btn btn-ghost btn-sm">
-              Login
-            </Link>
-            <Link to="/signup" className="btn btn-error btn-sm">
-              Sign up
-            </Link>
-          </>
+        {user && (
+          <nav className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((link) => (
+              <NavLink key={link.to} to={link.to} className={linkClass}>
+                {link.emoji} {link.label}
+              </NavLink>
+            ))}
+          </nav>
         )}
+
+        <div className="flex items-center gap-2">
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                aria-label="Account menu"
+                className="flex items-center gap-2 rounded-full border-[3px] border-ink bg-sunny py-1 pl-1 pr-3 shadow-pop-sm hover:shadow-pop transition"
+              >
+                <Avatar user={user} className="w-9" textClass="text-xs" />
+                <span className="font-semibold hidden sm:inline">
+                  hey {user.firstName}!
+                </span>
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu z-30 mt-3 w-52 rounded-2xl border-[3px] border-ink bg-base-100 p-2 shadow-pop"
+              >
+                {NAV_LINKS.map((link) => (
+                  <li key={link.to} className="md:hidden">
+                    <Link to={link.to}>
+                      {link.emoji} {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li className="hidden md:block">
+                  <Link to="/profile">✨ Edit profile</Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>👋 Logout</button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="btn-plain !px-4 !py-1.5 text-sm">
+                Login
+              </Link>
+              <Link to="/signup" className="btn-grape !px-4 !py-1.5 text-sm">
+                Sign up
+              </Link>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </header>
   );
 };
 
