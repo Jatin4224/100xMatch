@@ -1,27 +1,43 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Body from "./components/Body";
-import Login from "./components/login";
-import Feed from "./components/Feed";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
-import Profile from "./components/Profile";
+import Body from "./components/Body";
 import Home from "./components/Home";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Feed from "./components/Feed";
+import Profile from "./components/Profile";
+import Connections from "./components/Connections";
+import Requests from "./components/Requests";
+import NotFound from "./components/NotFound";
+import { GuestRoute, ProtectedRoute } from "./components/RouteGuards";
+
 function App() {
   return (
-    <>
-      <Provider store={appStore}>
-        <BrowserRouter basename="/">
-          <Routes>
-            <Route path="/" element={<Body />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/feed" element={<Feed />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/home" element={<Home />} />
+    <Provider store={appStore}>
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Body />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Navigate to="/" replace />} />
+            <Route element={<GuestRoute />}>
+              <Route path="login" element={<Login />} />
             </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
-    </>
+            {/* new users fill in their profile first */}
+            <Route element={<GuestRoute redirectTo="/profile" />}>
+              <Route path="signup" element={<Signup />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="feed" element={<Feed />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="connections" element={<Connections />} />
+              <Route path="requests" element={<Requests />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

@@ -1,59 +1,44 @@
 import { useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import api, { getErrorMessage } from "../utils/api";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
-  const [email, setEmail] = useState("parth@example.com");
-  const [password, setPassword] = useState("Parth4224@@");
-  const [buttonMessage, setButtonMessage] = useState("Login");
   const dispatch = useDispatch();
-  const handleLogin = async () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
     try {
-      const res = await axios.post(
-        BASE_URL + "/signin",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
-
-      if (res.status === 200 && res.data === "user is not found") {
-        console.error("Error:", res.data);
-
-        alert("Login failed: User is not found");
-        return;
-      }
-
-      console.log("Login successful:", res.data);
-      dispatch(addUser(res.data));
-
-      setButtonMessage("You’re home, 100x Dev. Let’s innovate together!😉");
-      return navigate("/feed");
+      const res = await api.post("/signin", { email, password });
+      // GuestRoute redirects once the user is set
+      dispatch(addUser(res.data.data));
     } catch (err) {
-      setError(err?.request?.statusText);
-
-      setButtonMessage("Failed!🥺🥺");
+      setError(getErrorMessage(err));
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center pt-40 relative">
-      <div className="absolute top-10 left-0 right-0 h-1/2 flex justify-center ">
-        <img
-          src="https://media.tenor.com/nP7Hl7wEZOcAAAAi/hacker-meme-hacker.gif"
-          alt="Hacker Meme"
-          className="w-25 h-25 object-cover shadow-lg"
-        />
-      </div>
-      <div className="card bg-base-400 w-96 shadow-lg bg-base-200  top-20 hover:shadow-[0px_4px_30px_0px_rgba(255,255,255,0.3)]">
-        <div className="card-body">
-          <h2 className="card-title flex justify-center">Login</h2>
+    <div className="flex flex-col items-center gap-6">
+      <img
+        src="https://media.tenor.com/nP7Hl7wEZOcAAAAi/hacker-meme-hacker.gif"
+        alt="Hacker Meme"
+        className="w-32 h-32 object-cover"
+      />
+      <form
+        onSubmit={handleLogin}
+        className="card w-full max-w-sm shadow-lg bg-base-200 hover:shadow-[0px_4px_30px_0px_rgba(255,255,255,0.3)]"
+      >
+        <div className="card-body gap-4">
+          <h2 className="card-title justify-center">Login</h2>
 
           <label className="input input-bordered flex items-center gap-2">
             <svg
@@ -66,9 +51,11 @@ const Login = () => {
               <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
             </svg>
             <input
-              type="text"
+              type="email"
               className="grow"
               placeholder="Email"
+              autoComplete="email"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -90,16 +77,32 @@ const Login = () => {
               type="password"
               className="grow"
               placeholder="Password"
+              autoComplete="current-password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          <button className="btn btn-outline btn-error" onClick={handleLogin}>
-            {buttonMessage}
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <button
+            type="submit"
+            className="btn btn-outline btn-error"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="loading loading-spinner"></span>
+            ) : (
+              "Login"
+            )}
           </button>
-          <p className="text-red-600">{error}</p>
+          <p className="text-center text-sm">
+            New here?{" "}
+            <Link to="/signup" className="link link-error">
+              Create an account
+            </Link>
+          </p>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -4,35 +4,29 @@ const userAuth = require("../middleware/auth");
 const { validateEditProfileData } = require("../utils/validate");
 
 profileRouter.get("/profile/view", userAuth, async (req, res) => {
-  try {
-    const user = req.user;
-    res.send(user);
-  } catch (error) {
-    res.status(400).json({
-      message: "error" + error.message,
-    });
-  }
+  res.json({ data: req.user });
 });
 
 //profile/edit
 profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
+  let updates;
   try {
-    validateEditProfileData(req);
+    updates = validateEditProfileData(req);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
 
-    if (!validateEditProfileData) {
-      res.status(404).send("invalid field");
-    }
-
+  try {
     const loggedInUser = req.user;
 
-    Object.keys(req.body).forEach(
-      (keys) => (loggedInUser[keys] = req.body[keys])
-    );
+    Object.keys(updates).forEach((key) => (loggedInUser[key] = updates[key]));
     await loggedInUser.save();
-    res.send("updated user");
+    res.json({
+      message: `${loggedInUser.firstName}, your profile was updated`,
+      data: loggedInUser,
+    });
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).json({ message: err.message });
   }
 });
-//update-profile/password
 module.exports = profileRouter;
