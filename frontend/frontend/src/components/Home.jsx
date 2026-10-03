@@ -8,19 +8,19 @@ const FEATURES = [
     emoji: "💘",
     title: "Swipe",
     description: "Flip through dev profiles. Like the vibe? Smash interested.",
-    color: "bg-blush",
+    color: "bg-rose",
   },
   {
     emoji: "⚡",
     title: "Match",
     description: "When the feeling is mutual, it's a match. No ghosting the PR.",
-    color: "bg-sunny",
+    color: "bg-baby",
   },
   {
     emoji: "🚀",
     title: "Build",
     description: "Hackathons, side projects, mentorship. Ship something cute.",
-    color: "bg-grape-light",
+    color: "bg-hot-deep",
   },
 ];
 
@@ -52,15 +52,15 @@ const Home = () => {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start">
             {user ? (
-              <Link to="/feed" className="btn-grape text-lg">
+              <Link to="/feed" className="btn-hot text-lg">
                 Go to your feed 💘
               </Link>
             ) : (
               <>
-                <Link to="/signup" className="btn-grape text-lg">
+                <Link to="/signup" className="btn-hot text-lg">
                   Find your match 💘
                 </Link>
-                <Link to="/login" className="btn-sunny text-lg">
+                <Link to="/login" className="btn-baby text-lg">
                   I have an account
                 </Link>
               </>
@@ -75,17 +75,17 @@ const Home = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.2, ease: "backOut" }}
         >
-          <div className="card-pop absolute inset-0 rotate-[-8deg] bg-sunny" />
-          <div className="card-pop absolute inset-0 rotate-[5deg] bg-blush" />
+          <div className="card-pop absolute inset-0 rotate-[-8deg] bg-baby" />
+          <div className="card-pop absolute inset-0 rotate-[5deg] bg-rose" />
           <div className="card-pop absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
-            <div className="flex h-28 w-28 items-center justify-center rounded-full border-[3px] border-ink bg-grape-light text-6xl">
+            <div className="flex h-28 w-28 items-center justify-center rounded-full border-[3px] border-line bg-hot-deep text-6xl">
               👩‍💻
             </div>
             <p className="font-bubble text-2xl">Byte, 24</p>
             <div className="flex flex-wrap justify-center gap-2">
               <span className="chip">React</span>
-              <span className="chip !bg-grape-light">Rust</span>
-              <span className="chip !bg-blush">cats</span>
+              <span className="chip !bg-white">Rust</span>
+              <span className="chip !bg-rose">cats</span>
             </div>
             <p className="font-hand text-2xl leading-none">
               &quot;looking for my pair-programming partner&quot;
@@ -109,7 +109,7 @@ const Home = () => {
             transition={{ delay: 0.3 + index * 0.15 }}
           >
             <div
-              className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-ink text-3xl ${item.color}`}
+              className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-line text-3xl ${item.color}`}
             >
               {item.emoji}
             </div>

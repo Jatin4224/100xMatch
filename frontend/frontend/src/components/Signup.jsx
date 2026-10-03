@@ -68,21 +68,21 @@ const Signup = () => {
           </label>
         ))}
       </div>
-      <p className="text-xs text-ink/70">
+      <p className="text-xs text-white/70">
         Password: 8+ characters with an uppercase letter, a lowercase letter, a
         number and a symbol.
       </p>
       {error && (
-        <p className="rounded-xl border-2 border-ink bg-blush/40 px-3 py-2 text-sm font-semibold">
+        <p className="rounded-xl border-2 border-line bg-rose/40 px-3 py-2 text-sm font-semibold">
           {error}
         </p>
       )}
-      <button type="submit" className="btn-grape mt-2" disabled={loading}>
+      <button type="submit" className="btn-hot mt-2" disabled={loading}>
         {loading ? "Creating..." : "Start matching 💘"}
       </button>
       <p className="text-center text-sm">
         Already have an account?{" "}
-        <Link to="/login" className="font-bold text-grape underline">
+        <Link to="/login" className="font-bold text-hot underline">
           Login
         </Link>
       </p>

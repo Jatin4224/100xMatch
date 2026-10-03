@@ -149,16 +149,16 @@ const EditProfile = ({ user }) => {
           </Field>
 
           {error && (
-            <p className="rounded-xl border-2 border-ink bg-blush/40 px-3 py-2 text-sm font-semibold">
+            <p className="rounded-xl border-2 border-line bg-rose/40 px-3 py-2 text-sm font-semibold">
               {error}
             </p>
           )}
           {saved && (
-            <p className="rounded-xl border-2 border-ink bg-sunny px-3 py-2 text-sm font-semibold">
+            <p className="rounded-xl border-2 border-line bg-baby px-3 py-2 text-sm font-semibold text-ink">
               Profile saved! Looking good ✨
             </p>
           )}
-          <button type="submit" className="btn-grape mt-1" disabled={loading}>
+          <button type="submit" className="btn-hot mt-1" disabled={loading}>
             {loading ? "Saving..." : "Save Changes"}
           </button>
         </form>

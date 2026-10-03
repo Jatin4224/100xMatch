@@ -58,16 +58,16 @@ const Login = () => {
         />
       </label>
       {error && (
-        <p className="rounded-xl border-2 border-ink bg-blush/40 px-3 py-2 text-sm font-semibold">
+        <p className="rounded-xl border-2 border-line bg-rose/40 px-3 py-2 text-sm font-semibold">
           {error}
         </p>
       )}
-      <button type="submit" className="btn-grape mt-2" disabled={loading}>
+      <button type="submit" className="btn-hot mt-2" disabled={loading}>
         {loading ? "Logging in..." : "Let me in ⚡"}
       </button>
       <p className="text-center text-sm">
         New here?{" "}
-        <Link to="/signup" className="font-bold text-grape underline">
+        <Link to="/signup" className="font-bold text-hot underline">
           Create an account
         </Link>
       </p>

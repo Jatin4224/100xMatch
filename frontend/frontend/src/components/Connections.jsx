@@ -30,7 +30,7 @@ const Connections = () => {
   if (connections.length === 0) {
     return (
       <EmptyState title="No matches yet" note="your person is out there ⚡">
-        <Link to="/feed" className="btn-grape mt-4">
+        <Link to="/feed" className="btn-hot mt-4">
           Start swiping
         </Link>
       </EmptyState>
@@ -60,7 +60,7 @@ const Connections = () => {
                 {connection.firstName} {connection.lastName}
               </h2>
               {(connection.age || connection.gender) && (
-                <p className="text-sm font-semibold text-ink/60">
+                <p className="text-sm font-semibold text-white/60">
                   {[connection.age, connection.gender]
                     .filter(Boolean)
                     .join(" · ")}

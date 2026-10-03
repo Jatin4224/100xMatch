@@ -7,11 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        grape: { DEFAULT: "#8B4FD0", dark: "#5B2A91", light: "#C9A7F2" },
-        sunny: { DEFAULT: "#FFD43B", dark: "#F2B705" },
-        cream: { DEFAULT: "#F6EEDF", dark: "#EADFC8" },
-        ink: "#16121D",
-        blush: "#FF8FB1",
+        hot: { DEFAULT: "#FF2E93", soft: "#FF8CC6", deep: "#3D0F28" },
+        baby: { DEFAULT: "#FFC6E3", dark: "#FF8CC6" },
+        rose: "#FF5FAE",
+        night: { DEFAULT: "#0A0A0D", soft: "#1E1E26" },
+        // text on light-pink surfaces
+        ink: "#0A0A0D",
+        // outlines and hard shadows
+        line: "#FF2E93",
       },
       fontFamily: {
         bubble: ['"Bagel Fat One"', "system-ui", "sans-serif"],
@@ -19,9 +22,9 @@ export default {
         sans: ['"Fredoka"', "system-ui", "sans-serif"],
       },
       boxShadow: {
-        pop: "4px 4px 0 0 #16121D",
-        "pop-lg": "8px 8px 0 0 #16121D",
-        "pop-sm": "2px 2px 0 0 #16121D",
+        pop: "4px 4px 0 0 #FF2E93",
+        "pop-lg": "8px 8px 0 0 #FF2E93",
+        "pop-sm": "2px 2px 0 0 #FF2E93",
       },
       keyframes: {
         wiggle: {
@@ -43,23 +46,23 @@ export default {
   daisyui: {
     themes: [
       {
-        kodr: {
-          primary: "#8B4FD0",
+        blackpink: {
+          primary: "#FF2E93",
           "primary-content": "#FFFFFF",
-          secondary: "#FFD43B",
-          "secondary-content": "#16121D",
-          accent: "#FF8FB1",
-          "accent-content": "#16121D",
-          neutral: "#16121D",
-          "neutral-content": "#F6EEDF",
-          "base-100": "#FFFDF8",
-          "base-200": "#F6EEDF",
-          "base-300": "#EADFC8",
-          "base-content": "#16121D",
+          secondary: "#FFC6E3",
+          "secondary-content": "#0A0A0D",
+          accent: "#FF5FAE",
+          "accent-content": "#0A0A0D",
+          neutral: "#1E1E26",
+          "neutral-content": "#FFFFFF",
+          "base-100": "#141419",
+          "base-200": "#0A0A0D",
+          "base-300": "#1E1E26",
+          "base-content": "#F7F2F5",
           info: "#7CC6FE",
           success: "#3BB273",
-          warning: "#F2B705",
-          error: "#E5484D",
+          warning: "#FFC6E3",
+          error: "#FF4D6D",
           "--rounded-box": "1.5rem",
           "--rounded-btn": "9999px",
           "--border-btn": "2px",

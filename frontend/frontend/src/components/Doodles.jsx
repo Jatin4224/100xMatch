@@ -4,20 +4,20 @@ export const Bolt = ({ className = "w-12" }) => (
   <svg viewBox="0 0 64 80" className={className} aria-hidden="true">
     <path
       d="M38 2 6 46h22l-8 32 38-48H34l8-28z"
-      fill="#FFD43B"
-      stroke="#16121D"
+      fill="#FF2E93"
+      stroke="#0A0A0D"
       strokeWidth="4"
       strokeLinejoin="round"
     />
   </svg>
 );
 
-export const Heart = ({ className = "w-8", fill = "#FF8FB1" }) => (
+export const Heart = ({ className = "w-8", fill = "#FFC6E3" }) => (
   <svg viewBox="0 0 64 58" className={className} aria-hidden="true">
     <path
       d="M32 54S4 38 4 19A14 14 0 0 1 32 12a14 14 0 0 1 28 7c0 19-28 35-28 35z"
       fill={fill}
-      stroke="#16121D"
+      stroke="#0A0A0D"
       strokeWidth="4"
       strokeLinejoin="round"
     />
@@ -28,8 +28,8 @@ export const Sparkle = ({ className = "w-6" }) => (
   <svg viewBox="0 0 40 40" className={className} aria-hidden="true">
     <path
       d="M20 2c2 10 8 16 18 18-10 2-16 8-18 18-2-10-8-16-18-18C12 18 18 12 20 2z"
-      fill="#FFFDF8"
-      stroke="#16121D"
+      fill="#FFFFFF"
+      stroke="#0A0A0D"
       strokeWidth="3"
       strokeLinejoin="round"
     />

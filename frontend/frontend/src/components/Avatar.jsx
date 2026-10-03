@@ -10,7 +10,7 @@ const Avatar = ({ user, className = "w-10", textClass = "text-sm" }) => {
   if (user?.photoUrl && user.photoUrl !== brokenUrl) {
     return (
       <div
-        className={`${className} aspect-square shrink-0 rounded-full border-[3px] border-ink overflow-hidden bg-grape-light`}
+        className={`${className} aspect-square shrink-0 rounded-full border-[3px] border-ink overflow-hidden bg-hot-deep`}
       >
         <img
           alt={`${user.firstName} ${user.lastName}`}
@@ -24,7 +24,7 @@ const Avatar = ({ user, className = "w-10", textClass = "text-sm" }) => {
 
   return (
     <div
-      className={`${className} ${textClass} aspect-square shrink-0 rounded-full border-[3px] border-ink bg-sunny flex items-center justify-center font-bubble text-ink`}
+      className={`${className} ${textClass} aspect-square shrink-0 rounded-full border-[3px] border-ink bg-baby flex items-center justify-center font-bubble text-ink`}
     >
       {initials || "?"}
     </div>

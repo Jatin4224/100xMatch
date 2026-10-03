@@ -4,7 +4,7 @@ import { EmptyState } from "./Doodles";
 const NotFound = () => {
   return (
     <EmptyState title="404" note="this page ghosted you">
-      <Link to="/" className="btn-grape mt-4">
+      <Link to="/" className="btn-hot mt-4">
         Take me home
       </Link>
     </EmptyState>

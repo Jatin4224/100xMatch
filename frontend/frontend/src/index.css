@@ -3,61 +3,64 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    color-scheme: dark;
+  }
   body {
-    @apply bg-cream text-ink font-sans antialiased;
-    /* soft polka dots, like poster paper */
-    background-image: radial-gradient(#e4d6bb 1.2px, transparent 1.2px);
+    @apply bg-night text-base-content font-sans antialiased;
+    /* faint pink polka dots on black */
+    background-image: radial-gradient(#2a1420 1.2px, transparent 1.2px);
     background-size: 22px 22px;
   }
 }
 
 @layer components {
-  /* chunky purple lettering with a black outline + drop shadow */
+  /* chunky hot-pink lettering with a black outline + light-pink drop shadow */
   .title-bubble {
-    @apply font-bubble text-grape leading-[0.95] tracking-tight;
-    -webkit-text-stroke: 0.06em #16121d;
+    @apply font-bubble text-hot leading-[0.95] tracking-tight;
+    -webkit-text-stroke: 0.06em #0a0a0d;
     paint-order: stroke fill;
-    text-shadow: 0.06em 0.07em 0 #16121d;
+    text-shadow: 0.06em 0.07em 0 #ffc6e3;
   }
 
-  /* handwritten note (yellow is kept for dark/purple backgrounds) */
+  /* handwritten note */
   .scribble {
-    @apply font-hand text-grape-dark;
+    @apply font-hand text-hot-soft;
   }
 
-  /* sticker-style card: thick outline + hard shadow */
+  /* sticker-style card: pink outline + hard pink shadow */
   .card-pop {
-    @apply bg-base-100 border-[3px] border-ink rounded-[1.75rem] shadow-pop-lg;
+    @apply bg-base-100 border-[3px] border-line rounded-[1.75rem] shadow-pop-lg;
   }
 
   .btn-pop {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border-[3px] border-ink
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-[3px] border-line
       px-6 py-2.5 font-semibold text-base shadow-pop transition-all duration-150
       hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-pop-lg
       active:translate-x-1 active:translate-y-1 active:shadow-none
       disabled:pointer-events-none disabled:opacity-60;
   }
-  .btn-grape {
-    @apply btn-pop bg-grape text-white;
+  .btn-hot {
+    @apply btn-pop bg-hot text-white !border-baby;
   }
-  .btn-sunny {
-    @apply btn-pop bg-sunny text-ink;
+  .btn-baby {
+    @apply btn-pop bg-baby text-ink;
   }
   .btn-plain {
-    @apply btn-pop bg-base-100 text-ink;
+    @apply btn-pop bg-night text-white;
   }
 
   .input-pop {
-    @apply w-full rounded-2xl border-[3px] border-ink bg-base-100 px-4 py-2.5 font-normal text-ink
-      placeholder:text-ink/40 shadow-pop-sm outline-none transition
-      focus:shadow-pop focus:border-grape;
+    @apply w-full rounded-2xl border-[3px] border-line/60 bg-night px-4 py-2.5 font-normal text-white
+      placeholder:text-white/35 outline-none transition
+      focus:border-line focus:shadow-pop;
   }
 
   .chip {
-    @apply inline-block rounded-full border-2 border-ink bg-sunny px-3 py-0.5 text-sm font-semibold shadow-pop-sm;
+    @apply inline-block rounded-full border-2 border-line bg-baby px-3 py-0.5 text-sm font-semibold text-ink;
   }
 
   .sticker {
-    @apply inline-block rounded-xl border-[3px] border-ink bg-sunny px-3 py-1 font-bubble text-ink shadow-pop;
+    @apply inline-block rounded-xl border-[3px] border-line bg-baby px-3 py-1 font-bubble text-ink shadow-pop;
   }
 }

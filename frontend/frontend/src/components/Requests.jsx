@@ -47,7 +47,7 @@ const Requests = () => {
   if (requests.length === 0) {
     return (
       <EmptyState title="No love letters" note="...yet! keep swiping 💌">
-        <Link to="/feed" className="btn-grape mt-4">
+        <Link to="/feed" className="btn-hot mt-4">
           Go to feed
         </Link>
       </EmptyState>
@@ -94,7 +94,7 @@ const Requests = () => {
                   ✕ Pass
                 </button>
                 <button
-                  className="btn-grape !px-4"
+                  className="btn-hot !px-4"
                   disabled={busyId === request._id}
                   onClick={() => reviewRequest("accepted", request._id)}
                 >

@@ -1,7 +1,7 @@
 import Avatar from "./Avatar";
 import { Bolt } from "./Doodles";
 
-const CHIP_COLORS = ["", "!bg-grape-light", "!bg-blush", "!bg-cream-dark"];
+const CHIP_COLORS = ["", "!bg-rose", "!bg-white"];
 
 // a developer's profile card; pass onInterested/onIgnore to show the feed buttons
 const UserCard = ({ user, onInterested, onIgnore, busy = false }) => {
@@ -11,7 +11,7 @@ const UserCard = ({ user, onInterested, onIgnore, busy = false }) => {
   return (
     <div className="card-pop relative w-full max-w-sm overflow-visible">
       <Bolt className="absolute -right-4 -top-6 z-10 w-11 rotate-12" />
-      <div className="flex justify-center rounded-t-[1.5rem] border-b-[3px] border-ink bg-grape py-8">
+      <div className="flex justify-center rounded-t-[1.5rem] border-b-[3px] border-line bg-hot py-8">
         <Avatar user={user} className="w-40" textClass="text-5xl" />
       </div>
       <div className="flex flex-col gap-3 p-6">
@@ -20,7 +20,7 @@ const UserCard = ({ user, onInterested, onIgnore, busy = false }) => {
             {firstName} {lastName}
           </h2>
           {details && (
-            <p className="mt-1 font-semibold text-ink/60">{details}</p>
+            <p className="mt-1 font-semibold text-white/60">{details}</p>
           )}
         </div>
         <p className="font-hand text-2xl leading-tight">
@@ -49,7 +49,7 @@ const UserCard = ({ user, onInterested, onIgnore, busy = false }) => {
               ✕ Nope
             </button>
             <button
-              className="btn-grape"
+              className="btn-hot"
               onClick={onInterested}
               disabled={busy}
               aria-label="Interested"
