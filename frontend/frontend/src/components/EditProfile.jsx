@@ -56,110 +56,135 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-10">
-      <form
-        onSubmit={handleSave}
-        className="card w-full max-w-md bg-base-200 hover:shadow-[0px_4px_30px_0px_rgba(255,255,255,0.3)]"
-      >
-        <div className="card-body gap-3">
-          <h2 className="card-title justify-center">Edit Profile</h2>
-
-          <div className="flex gap-3">
-            <input
-              name="firstName"
-              className="input input-bordered w-full"
-              placeholder="First Name"
-              required
-              value={form.firstName}
-              onChange={handleChange}
-            />
-            <input
-              name="lastName"
-              className="input input-bordered w-full"
-              placeholder="Last Name"
-              required
-              value={form.lastName}
-              onChange={handleChange}
-            />
+    <div className="mx-auto max-w-5xl">
+      <div className="mb-8 text-center">
+        <h1 className="title-bubble text-5xl md:text-6xl">Your profile</h1>
+        <p className="scribble mt-1 text-3xl -rotate-1">
+          make it cute, make it you
+        </p>
+      </div>
+      <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-start lg:justify-center">
+        <form
+          onSubmit={handleSave}
+          className="card-pop flex w-full max-w-md flex-col gap-4 p-7"
+        >
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="First name">
+              <input
+                name="firstName"
+                className="input-pop"
+                required
+                value={form.firstName}
+                onChange={handleChange}
+              />
+            </Field>
+            <Field label="Last name">
+              <input
+                name="lastName"
+                className="input-pop"
+                required
+                value={form.lastName}
+                onChange={handleChange}
+              />
+            </Field>
           </div>
-          <input
-            name="photoUrl"
-            type="url"
-            className="input input-bordered"
-            placeholder="Photo URL"
-            value={form.photoUrl}
-            onChange={handleChange}
-          />
-          <div className="flex gap-3">
+          <Field label="Photo URL">
             <input
-              name="age"
-              type="number"
-              min="18"
-              max="120"
-              className="input input-bordered w-full"
-              placeholder="Age"
-              value={form.age}
+              name="photoUrl"
+              type="url"
+              className="input-pop"
+              placeholder="https://..."
+              value={form.photoUrl}
               onChange={handleChange}
             />
-            <select
-              name="gender"
-              className="select select-bordered w-full"
-              value={form.gender}
-              onChange={handleChange}
-            >
-              <option value="" disabled>
-                Gender
-              </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
+          </Field>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Age">
+              <input
+                name="age"
+                type="number"
+                min="18"
+                max="120"
+                className="input-pop"
+                placeholder="18+"
+                value={form.age}
+                onChange={handleChange}
+              />
+            </Field>
+            <Field label="Gender">
+              <select
+                name="gender"
+                className="input-pop"
+                value={form.gender}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Pick one
+                </option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </Field>
           </div>
-          <input
-            name="skills"
-            className="input input-bordered"
-            placeholder="Skills (comma separated)"
-            value={form.skills}
-            onChange={handleChange}
-          />
-          <textarea
-            name="about"
-            className="textarea textarea-bordered"
-            placeholder="About you"
-            maxLength={500}
-            rows={4}
-            value={form.about}
-            onChange={handleChange}
-          />
+          <Field label="Skills (comma separated)">
+            <input
+              name="skills"
+              className="input-pop"
+              placeholder="react, rust, bad puns"
+              value={form.skills}
+              onChange={handleChange}
+            />
+          </Field>
+          <Field label="About you">
+            <textarea
+              name="about"
+              className="input-pop resize-none"
+              placeholder="tabs or spaces? tell us everything"
+              maxLength={500}
+              rows={4}
+              value={form.about}
+              onChange={handleChange}
+            />
+          </Field>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          {saved && <p className="text-green-500 text-sm">Profile saved!</p>}
-          <button
-            type="submit"
-            className="btn btn-outline btn-error"
-            disabled={loading}
-          >
-            {loading ? (
-              <span className="loading loading-spinner"></span>
-            ) : (
-              "Save Changes"
-            )}
+          {error && (
+            <p className="rounded-xl border-2 border-line bg-rose/40 px-3 py-2 text-sm font-semibold">
+              {error}
+            </p>
+          )}
+          {saved && (
+            <p className="rounded-xl border-2 border-line bg-baby px-3 py-2 text-sm font-semibold text-ink">
+              Profile saved! Looking good ✨
+            </p>
+          )}
+          <button type="submit" className="btn-hot mt-1" disabled={loading}>
+            {loading ? "Saving..." : "Save Changes"}
           </button>
-        </div>
-      </form>
+        </form>
 
-      <div className="w-full max-w-sm">
-        <p className="text-center mb-2 opacity-70">Preview</p>
-        <UserCard
-          user={{
-            ...form,
-            age: form.age === "" ? undefined : form.age,
-            skills,
-          }}
-        />
+        <div className="flex w-full max-w-sm flex-col items-center">
+          <p className="scribble mb-3 text-3xl rotate-2">
+            how others see you ↓
+          </p>
+          <UserCard
+            user={{
+              ...form,
+              age: form.age === "" ? undefined : form.age,
+              skills,
+            }}
+          />
+        </div>
       </div>
     </div>
   );
 };
+
+const Field = ({ label, children }) => (
+  <label className="flex flex-col gap-1 text-sm font-semibold">
+    {label}
+    {children}
+  </label>
+);
 
 export default EditProfile;

@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import api, { getErrorMessage } from "../utils/api";
 import { addFeed, removeUserFromFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
+import { EmptyState, Spinner } from "./Doodles";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
@@ -44,35 +46,46 @@ const Feed = () => {
   };
 
   if (error && !feed?.length) {
-    return <p className="text-center text-red-500 mt-10">{error}</p>;
+    return <EmptyState title="Oops!" note={error} />;
   }
 
   if (!feed || (feed.length === 0 && !exhausted)) {
-    return (
-      <div className="flex justify-center mt-20">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
+    return <Spinner />;
   }
 
   if (feed.length === 0) {
     return (
-      <p className="text-center mt-10 text-lg">
-        You&apos;ve seen everyone for now. Check back later!
-      </p>
+      <EmptyState
+        title="That's everyone!"
+        note="new devs drop in all the time, check back soon"
+      />
     );
   }
 
   const user = feed[0];
   return (
-    <div className="flex flex-col items-center gap-4">
-      <UserCard
-        user={user}
-        busy={busy}
-        onInterested={() => sendRequest("interested", user._id)}
-        onIgnore={() => sendRequest("ignored", user._id)}
-      />
-      {error && <p className="text-red-500">{error}</p>}
+    <div className="flex flex-col items-center gap-6">
+      <div className="text-center">
+        <h1 className="title-bubble text-5xl">Who&apos;s your type?</h1>
+        <p className="scribble mt-1 text-2xl">
+          {feed.length} cutie{feed.length === 1 ? "" : "s"} in the queue
+        </p>
+      </div>
+      <motion.div
+        key={user._id}
+        className="flex w-full justify-center"
+        initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 18 }}
+      >
+        <UserCard
+          user={user}
+          busy={busy}
+          onInterested={() => sendRequest("interested", user._id)}
+          onIgnore={() => sendRequest("ignored", user._id)}
+        />
+      </motion.div>
+      {error && <p className="font-semibold text-error">{error}</p>}
     </div>
   );
 };

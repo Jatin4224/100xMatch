@@ -1,95 +1,120 @@
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Bolt, Heart, Sparkle } from "./Doodles";
 
 const FEATURES = [
   {
+    emoji: "💘",
     title: "Swipe",
-    description:
-      "Connect with like-minded developers by swiping through profiles.",
+    description: "Flip through dev profiles. Like the vibe? Smash interested.",
+    color: "bg-rose",
   },
   {
+    emoji: "⚡",
     title: "Match",
-    description: "Find the best match based on skills, interests, and goals.",
+    description: "When the feeling is mutual, it's a match. No ghosting the PR.",
+    color: "bg-baby",
   },
   {
-    title: "Collaborate",
-    description:
-      "Start working on projects, hackathons, or mentorship programs.",
+    emoji: "🚀",
+    title: "Build",
+    description: "Hackathons, side projects, mentorship. Ship something cute.",
+    color: "bg-hot-deep",
   },
 ];
 
 const Home = () => {
-  const navigate = useNavigate();
   const user = useSelector((store) => store.user);
 
   return (
-    <div className="text-white flex flex-col items-center justify-center">
-      <motion.section
-        className="flex flex-col items-center text-center mt-10"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
-          Connecting Developers,{" "}
-          <span className="text-red-400">100x Faster!</span>
-        </h2>
-        <p className="text-lg text-gray-300 max-w-2xl">
-          Find your perfect coding partner, mentor, or collaborator
-          effortlessly. Swipe, match, and build amazing projects together.
-        </p>
-        <div className="flex gap-4 mt-6">
-          {user ? (
-            <motion.button
-              className="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-lg text-lg font-semibold"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => navigate("/feed")}
-            >
-              Go to your feed
-            </motion.button>
-          ) : (
-            <>
-              <motion.button
-                className="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-lg text-lg font-semibold"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => navigate("/signup")}
-              >
-                Sign up
-              </motion.button>
-              <motion.button
-                className="border border-red-500 hover:bg-red-500/20 px-6 py-3 rounded-lg text-lg font-semibold"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </motion.button>
-            </>
-          )}
-        </div>
-      </motion.section>
+    <div className="mx-auto max-w-6xl">
+      <section className="relative grid items-center gap-10 py-6 md:grid-cols-2">
+        <motion.div
+          className="relative text-center md:text-left"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "backOut" }}
+        >
+          <Bolt className="absolute -left-2 -top-10 w-14 animate-wiggle md:-left-10" />
+          <h1 className="title-bubble text-[clamp(3.5rem,11vw,7.5rem)]">
+            100x
+            <br />
+            Match
+          </h1>
+          <span className="sticker mt-4 -rotate-6 text-xl">for devs ♥</span>
+          <p className="scribble mt-6 text-4xl -rotate-2">
+            Commit to someone special.
+          </p>
+          <p className="mt-4 max-w-md text-lg mx-auto md:mx-0">
+            <b>Swipe. Match. Build.</b> Find your coding partner, mentor or
+            hackathon soulmate. Merge conflicts not included.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start">
+            {user ? (
+              <Link to="/feed" className="btn-hot text-lg">
+                Go to your feed 💘
+              </Link>
+            ) : (
+              <>
+                <Link to="/signup" className="btn-hot text-lg">
+                  Find your match 💘
+                </Link>
+                <Link to="/login" className="btn-baby text-lg">
+                  I have an account
+                </Link>
+              </>
+            )}
+          </div>
+        </motion.div>
 
-      <section className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl text-center">
+        {/* stacked "profile cards" collage */}
+        <motion.div
+          className="relative mx-auto h-[360px] w-[290px]"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "backOut" }}
+        >
+          <div className="card-pop absolute inset-0 rotate-[-8deg] bg-baby" />
+          <div className="card-pop absolute inset-0 rotate-[5deg] bg-rose" />
+          <div className="card-pop absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
+            <div className="flex h-28 w-28 items-center justify-center rounded-full border-[3px] border-line bg-hot-deep text-6xl">
+              👩‍💻
+            </div>
+            <p className="font-bubble text-2xl">Byte, 24</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              <span className="chip">React</span>
+              <span className="chip !bg-white">Rust</span>
+              <span className="chip !bg-rose">cats</span>
+            </div>
+            <p className="font-hand text-2xl leading-none">
+              &quot;looking for my pair-programming partner&quot;
+            </p>
+          </div>
+          <Heart className="absolute -right-6 -top-6 w-14 animate-float" />
+          <Sparkle className="absolute -bottom-4 -left-6 w-10 animate-float" />
+        </motion.div>
+      </section>
+
+      <section className="mt-16 grid gap-8 md:grid-cols-3">
         {FEATURES.map((item, index) => (
           <motion.div
             key={item.title}
-            className="bg-gray-800 p-6 rounded-lg shadow-lg"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, y: [0, -10, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: index * 0.2,
-            }}
+            className={`card-pop p-6 text-center ${
+              index % 2 ? "md:rotate-2" : "md:-rotate-2"
+            }`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ rotate: 0, y: -6 }}
+            transition={{ delay: 0.3 + index * 0.15 }}
           >
-            <h3 className="text-2xl font-semibold text-red-400">
-              {item.title}
-            </h3>
-            <p className="text-gray-300 mt-2">{item.description}</p>
+            <div
+              className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border-[3px] border-line text-3xl ${item.color}`}
+            >
+              {item.emoji}
+            </div>
+            <h3 className="title-bubble text-4xl">{item.title}</h3>
+            <p className="mt-3">{item.description}</p>
           </motion.div>
         ))}
       </section>
