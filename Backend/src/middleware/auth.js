@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
 const User = require("../models/user");
 
 const userAuth = async (req, res, next) => {
@@ -10,20 +9,18 @@ const userAuth = async (req, res, next) => {
         message: "Not logged In",
       });
     }
-    s;
-    const decodedMessage = await jwt.verify(token, process.env.JWT_SECRET);
 
-    const { _id } = decodedMessage;
+    const { _id } = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findById(_id);
     if (!user) {
-      throw new Error("user not found");
+      return res.status(401).json({ message: "User not found" });
     }
     req.user = user;
     next();
   } catch (error) {
-    res.status(400).json({
-      message: "error" + error.message,
+    res.status(401).json({
+      message: "Invalid or expired session",
     });
   }
 };

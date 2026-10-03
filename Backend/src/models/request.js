@@ -18,7 +18,7 @@ const requestSchema = new Schema(
       type: String,
       enum: {
         values: ["interested", "rejected", "accepted", "ignored"],
-        message: `{values} incorrect`,
+        message: "{VALUE} is not a valid status",
       },
       required: [true, "status is required"],
     },
@@ -27,11 +27,15 @@ const requestSchema = new Schema(
     timestamps: true,
   }
 );
+
+// one request per pair of users (per direction); the route also checks the reverse direction
+requestSchema.index({ fromUserId: 1, toUserId: 1 }, { unique: true });
+
 requestSchema.pre("save", function (next) {
   const request = this;
 
   if (request.fromUserId.equals(request.toUserId)) {
-    throw new Error("fromUserId and toUserId cannot be the same.");
+    return next(new Error("fromUserId and toUserId cannot be the same."));
   }
 
   next();
