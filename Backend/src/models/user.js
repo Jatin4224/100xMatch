@@ -12,7 +12,7 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true,
     },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     about: { type: String, default: "", maxLength: 500 },
     photoUrl: { type: String, default: "" },
     skills: { type: [String], default: [] },
@@ -25,7 +25,17 @@ const userSchema = new Schema(
     },
     age: { type: Number, min: 18, max: 120 },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      // never send the password hash to clients
+      transform: (doc, ret) => {
+        delete ret.password;
+        delete ret.__v;
+        return ret;
+      },
+    },
+  }
 );
 
 module.exports = mongoose.model("User", userSchema);
